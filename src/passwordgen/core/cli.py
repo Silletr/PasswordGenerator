@@ -8,7 +8,10 @@ app = typer.Typer()
 @app.command()
 def generate(length: int = 32):
     """Generates a random password
-    P.S - Even owner of this app dont know your password from Youtube, promise"""
+    P.S from Silletr - Even owner of this app,
+    dont know your password from Youtube
+    (promise)
+    """
     typer.echo(generate_password(length))
 
 
@@ -24,7 +27,7 @@ def save(site: str, user: str):
 
 
 @app.command()
-def list():
+def entry_list():
     """List all saved entries"""
     vault = Vault()
     entries = vault.entries_list()
