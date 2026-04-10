@@ -1,18 +1,36 @@
-import typer
 from passwordgen import generate_password
+from passwordgen.enhancer.mutator import apply_policy
+import typer
+
 from .vault import Vault
 
 app = typer.Typer()
 
 
 @app.command()
-def generate(length: int = 32):
+def generate(
+    length: int = 32,
+    policy: bool = False,
+):
     """Generates a random password
     P.S from Silletr - Even owner of this app,
     dont know your password from Youtube
     (promise)
     """
-    typer.echo(generate_password(length))
+    password = generate_password(length)
+    if policy:
+        password = apply_policy(
+            password,
+            min_digits=5,
+            min_upper=3,
+            min_symbols=5,
+            min_lower=1,  # usually you also need at least one lowercase
+        )
+        typer.echo(password)
+    if not policy:
+        typer.echo(password)
+        typer.echo("!!! Warning !!! No policy applied")
+        typer.echo("To enable policy add --policy in prompt (pls)")
 
 
 @app.command()
